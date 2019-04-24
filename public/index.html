@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="eventsource.js"></script>
+    <script>
+        var source = new EventSource('/sse')
+        source.addEventListener('open', function (e) {
+            console.log('open');
+        }, false);
+        source.addEventListener('message', function (e) {
+            console.dir(e)
+            console.log('data:' + e.data);
+        }, false);
+        source.addEventListener('close', function (e) {
+           if(!!e.data) {
+               // 移除事件，置空对象
+               source = null 
+               console.log('断开连接诶')
+           }
+
+        }, false);
+    </script>
+</body>
+
+</html>
